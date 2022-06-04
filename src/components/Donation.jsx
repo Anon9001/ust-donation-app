@@ -8,6 +8,8 @@ import { Fee, MsgSend } from '@terra-money/terra.js';
 
 function Donation() {
 
+    const networkAllowed = "pisco";
+
     const {
         CreateTxFailed,
         Timeout,
@@ -106,21 +108,18 @@ function Donation() {
     }
 
     const handleButton = () => {
-        if(amount === 0)
-            setTxResult({status: 2, message: "Amount = 0"})
-        else
-            setTxResult({status: 1, message: ""})
-
-        if (!connectedWallet) {
+        if (!connectedWallet.network.chainID.startsWith(networkAllowed)) {
+            setTxResult({status: 2, message: "Wrong network"})
+            return;
+        }
+        else if (!connectedWallet) {
             setTxResult({status: 2, message: "Wallet not connected"})
             return;
         }
 
-        if (connectedWallet.network.chainID.startsWith('phoenix')) {
-            setTxResult({status: 2, message: "Wrong network"})
-            return;
-        }
+        setTxResult({status: 1, message: ""})
 
+        /*
         connectedWallet
             .post({
                 fee: new Fee(1000000, '200000uusd'),
@@ -148,9 +147,12 @@ function Donation() {
                     setTxResult({status: 2, message: 'Unknown Error: ' + (error instanceof Error ? error.message : String(error))})
                 }
             });
+
+         */
     }
 
     useEffect(() => {
+        console.log(connectedWallet)
         if(status === "WALLET_CONNECTED"){
             lcd.bank.balance(connectedWallet.walletAddress).then(([coins]) => {
                 coins.map((item) => {
@@ -244,13 +246,6 @@ function Donation() {
                                     </svg>
                                     <span>
                                         Thank you very much for your donation!
-                                        <a
-                                        href={`https://finder.terra.money/${connectedWallet.network.chainID}/tx/${txResult.result.txhash}`}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        >
-                                            Tx Hash
-                                        </a>
                                     </span>
                                 </div>
                             </div>
@@ -282,7 +277,7 @@ function Donation() {
                                         </svg>
                                         <span>Insufficient balance</span>
                                     </div>
-                                ):  connectedWallet && !connectedWallet.network.chainID.startsWith('phoenix') ? (
+                                ):  connectedWallet && !connectedWallet.network.chainID.startsWith(networkAllowed) ? (
                                     <div className="alert alert-error shadow-lg justify-center">
                                         <div>
                                             <svg xmlns="http://www.w3.org/2000/svg"
