@@ -152,7 +152,6 @@ function Donation() {
     }
 
     useEffect(() => {
-        console.log(connectedWallet)
         if(status === "WALLET_CONNECTED"){
             lcd.bank.balance(connectedWallet.walletAddress).then(([coins]) => {
                 coins.map((item) => {
