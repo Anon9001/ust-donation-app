@@ -49,7 +49,7 @@ function Donation() {
 
     const refundAlgo = [
         {
-            title: "Distribute to 10% smallest holders only",
+            title: "Distribute to the smallest holders first",
             value: "0",
             description: "Insert description here"
         },

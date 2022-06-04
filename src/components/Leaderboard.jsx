@@ -2,13 +2,14 @@ import {truncate, nFormatter} from "../shared/Utils";
 import medal1 from "../assets/medal-1.png"
 import medal2 from "../assets/medal-2.png"
 import medal3 from "../assets/medal-3.png"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Spinner from "../shared/Spinner";
 
 function Leaderboard() {
 
     const [loading, setLoading] = useState(false)
-    const nbEntries = 15;
+    const [datas, setDatas] = useState(null)
+    const nbEntries = 10;
     const leaderboard = [
         {
             address: "0x27834649302a193848923020",
@@ -32,18 +33,25 @@ function Leaderboard() {
         }
     ];
 
+    useEffect(() => {
+        const datasTmp = leaderboard
+                            .sort((a, b) => b.amount - a.amount)
+                            .slice(0, nbEntries)
+        setDatas(datasTmp)
+    }, [])
+
     if(!loading) {
         return (
             <div className="mt-8">
-                <div className="divider">Leaderboard Donations - Top {nbEntries}</div>
+                <div className="divider">Leaderboard Donations - Top {nbEntries} Donors</div>
                 <div className="flex justify-between items-center mt-8 mx-4">
                     <span className="caption text-xs md:text-xs text-gray-500">Address</span>
                     <span className="caption text-xs md:text-xs text-gray-500 text-right">Amount Donated</span>
                 </div>
                 <div>
                     {
-                        leaderboard && leaderboard.length > 0 ? (
-                            leaderboard.map((item, index) => (
+                        datas && datas.length > 0 ? (
+                                datas.map((item, index) => (
                                 index < nbEntries && (
                                     <div key={item.address} className={index === 0 ? ("flex rounded-lg bg-gray-700 border border-yellow-500 my-4 py-2 px-4")
                                                                         : index === 1 ? ("flex rounded-lg bg-gray-700 border border-gray-200 my-4 mx-2 py-2 px-4")
