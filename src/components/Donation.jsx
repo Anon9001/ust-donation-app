@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {FaHeart} from 'react-icons/fa'
-import {MdWarning} from 'react-icons/md'
 import {RiInformationFill} from 'react-icons/ri'
 import Wallet from '../assets/wallet.png'
 import {truncate} from "../shared/Utils";
@@ -13,7 +12,6 @@ function Donation() {
         CreateTxFailed,
         Timeout,
         TxFailed,
-        TxResult,
         TxUnspecifiedError,
         UserDenied,
         status,
@@ -82,7 +80,7 @@ function Donation() {
     }
 
     const handleSelect = (e) => {
-        currencies.map((curr) => {
+        currencies.forEach((curr) => {
             if(curr.name === e.target.value){
                 setCurrency({ name: curr.name, denom: curr.denom})
                 if(status === "WALLET_CONNECTED"){
@@ -132,7 +130,7 @@ function Donation() {
                     }),
                 ],
             })
-            .then((nextTxResult) => {
+            .then(() => {
                 setTxResult({status: 1, message: ""});
             })
             .catch((error) => {
@@ -163,6 +161,8 @@ function Donation() {
         }
         else
             setAmountAvailable(0)
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, connectedWallet])
 
     return(
@@ -197,7 +197,7 @@ function Donation() {
                                     }
                                 </select>
                             </div>
-                            <div className="flex-1"></div>
+                            <div className="flex-1"/>
                             <input type="text"
                                    value={amount !== 0 ? amount : ""}
                                    onChange={updateAmount}
@@ -235,7 +235,7 @@ function Donation() {
                         </div>
                     </div>
                     {
-                        txResult.status === 1 && (
+                        (txResult.status === 1 && (
                             <div className="alert alert-success shadow-lg max-w-600">
                                 <div>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6"
@@ -255,7 +255,7 @@ function Donation() {
                                     </span>
                                 </div>
                             </div>
-                        ) || txResult.status === 2 && (
+                        )) || (txResult.status === 2 && (
                             <div className="alert alert-error shadow-lg max-w-600">
                                 <div>
                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -267,7 +267,7 @@ function Donation() {
                                     <span>Transaction error: {txResult.message}</span>
                                 </div>
                             </div>
-                        )
+                        ))
                     }
 
                     <div className="card-actions justify-center mt-4">

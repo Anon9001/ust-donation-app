@@ -52,8 +52,9 @@ function Table({ columns, data }) {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(false)
         setPageSize(20)
-    }, [])
+    }, [setPageSize])
 
     if(!loading) {
         return (

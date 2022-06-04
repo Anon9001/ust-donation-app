@@ -1,4 +1,4 @@
-import Table, { AvatarCell, SelectColumnFilter, StatusPill } from "./Table";
+import Table, { AvatarCell, StatusPill } from "./Table";
 import {nFormatter, truncate} from "../shared/Utils";
 import {useMemo} from "react";
 

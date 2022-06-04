@@ -10,30 +10,32 @@ function Leaderboard() {
     const [loading, setLoading] = useState(false)
     const [datas, setDatas] = useState(null)
     const nbEntries = 10;
-    const leaderboard = [
-        {
-            address: "0x27834649302a193848923020",
-            amount: 12392
-        },
-        {
-            address: "0x27834649302a193848923021",
-            amount: 123
-        },
-        {
-            address: "0x2792837849201230201",
-            amount: 94338
-        },
-        {
-            address: "0x2792837849201230202",
-            amount: 94338
-        },
-        {
-            address: "0x2792837849201230203",
-            amount: 9433883747
-        }
-    ];
+
 
     useEffect(() => {
+        setLoading(false)
+        const leaderboard = [
+            {
+                address: "0x27834649302a193848923020",
+                amount: 12392
+            },
+            {
+                address: "0x27834649302a193848923021",
+                amount: 123
+            },
+            {
+                address: "0x2792837849201230201",
+                amount: 94338
+            },
+            {
+                address: "0x2792837849201230202",
+                amount: 94338
+            },
+            {
+                address: "0x2792837849201230203",
+                amount: 9433883747
+            }
+        ];
         const datasTmp = leaderboard
                             .sort((a, b) => b.amount - a.amount)
                             .slice(0, nbEntries)
@@ -58,19 +60,19 @@ function Leaderboard() {
                                                                         : index === 2 ? ("flex rounded-lg bg-gray-700 border border-orange-400 my-4 mx-4 py-2 px-4")
                                                                         : ("flex rounded-lg bg-gray-700 my-4 border border-gray-600 mx-6 py-1 px-4")}>
                                         {
-                                            index === 0 && (
+                                            (index === 0 && (
                                                 <div className="mr-2">
                                                     <img src={medal1} alt="first"/>
                                                 </div>
-                                            ) || index === 1 && (
+                                            )) || (index === 1 && (
                                                 <div className="mr-2">
                                                     <img src={medal2} alt="second"/>
                                                 </div>
-                                            ) || index === 2 && (
+                                            )) || (index === 2 && (
                                                 <div className="mr-2">
                                                     <img src={medal3} alt="third"/>
                                                 </div>
-                                            )
+                                            ))
                                         }
                                         <div className="flex justify-between w-full">
                                             <div>{truncate(item.address)}</div>

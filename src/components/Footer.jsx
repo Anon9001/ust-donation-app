@@ -1,5 +1,4 @@
 function Footer(){
-    const footerYear = new Date().getFullYear()
 
     return(
         <footer className='footer p-4 text-primary-content text-gray-400 footer-center'>

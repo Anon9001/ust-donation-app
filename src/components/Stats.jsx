@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {nFormatter} from "../shared/Utils";
 import Spinner from "../shared/Spinner";
 
@@ -7,6 +7,13 @@ function Stats(){
     const [holdersCount, setHoldersCount] = useState(nFormatter(1600, 1))
     const [pourcentageRefunded, setPourcentageRefunded] = useState(25)
     const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setFundsNeeded(nFormatter(120000000, 1))
+        setHoldersCount(nFormatter(1600, 1))
+        setPourcentageRefunded(25)
+        setLoading(false)
+    }, [])
 
     if(!loading) {
         return(
