@@ -162,8 +162,7 @@ function Donation() {
         else
             setAmountAvailable(0)
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [status, connectedWallet])
+    }, [status, connectedWallet]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return(
         <div className="mt-8">
