@@ -4,18 +4,13 @@ import {RiInformationFill} from 'react-icons/ri'
 import Wallet from '../assets/wallet.png'
 import {truncate} from "../shared/Utils";
 import { useWallet, useConnectedWallet, useLCDClient, WalletStatus} from "@terra-money/wallet-provider";
-import { Fee, MsgSend } from '@terra-money/terra.js';
+import {currencies, networkAllowed, refundAlgo} from "../contract/config";
+import {execDonate} from "../contract/execute";
+import {toast} from "react-toastify";
+import {algoSmallestWallets} from "../contract/algos";
 
-function Donation() {
-
-    const networkAllowed = "pisco";
-
+function Donation({updateDatas, victims}) {
     const {
-        CreateTxFailed,
-        Timeout,
-        TxFailed,
-        TxUnspecifiedError,
-        UserDenied,
         status,
         availableConnectTypes,
         connect,
@@ -31,44 +26,7 @@ function Donation() {
     const [amountAvailable, setAmountAvailable] = useState(0);
     const [wrongAmount, setWrongAmount] = useState(false);
 
-    const CONTRACT_ADDRESS = 'terra12hnhh5vtyg5juqnzm43970nh4fw42pt27nw9g9';
-    const currencies = [
-        {
-            name: "USDT",
-            denom: "uusdt",
-        },
-        {
-            name: "USDC",
-            denom: "uusdc",
-        },
-        {
-            name: "Luna",
-            denom: "uluna",
-        }
-    ];
-
-    const refundAlgo = [
-        {
-            title: "Distribute to the smallest holders first",
-            value: "0",
-            description: "Insert description here"
-        },
-        {
-            title: "Distribute to all wallets",
-            value: "1",
-            description: "Insert description here"
-        },
-        {
-            title: "Distribute to all wallets with a 50k cap",
-            value: "2",
-            description: "Insert description here"
-        },
-        {
-            title: "Distribute to all wallets with a 200k cap",
-            value: "3",
-            description: "Insert description here"
-        }
-    ];
+    const [ loadingDonation, setLoadingDonation ] = useState(false);
 
     const updateAmount = (e) => {
         const val = e.target.value;
@@ -110,45 +68,44 @@ function Donation() {
     const handleButton = () => {
         if (!connectedWallet.network.chainID.startsWith(networkAllowed)) {
             setTxResult({status: 2, message: "Wrong network"})
-            return;
         }
         else if (!connectedWallet) {
             setTxResult({status: 2, message: "Wallet not connected"})
-            return;
         }
+        else {
+            setTxResult({status: 1, message: ""})
+            /*
+            const {victimsArray: listDonationsAlgo, totalAmount} = algoSmallestWallets(victims, amount*1e6)
+            console.log("listDonationsAlgo: ", listDonationsAlgo)
+            console.log("totalAmount: ", totalAmount)
 
-        setTxResult({status: 1, message: ""})
-
-        /*
-        connectedWallet
-            .post({
-                fee: new Fee(1000000, '200000uusd'),
-                msgs: [
-                    new MsgSend(connectedWallet.walletAddress, CONTRACT_ADDRESS, {
-                        uusd: 1000000,
-                    }),
-                ],
-            })
-            .then(() => {
-                setTxResult({status: 1, message: ""});
-            })
-            .catch((error) => {
-                if (error instanceof UserDenied) {
-                    setTxResult({status: 2, message: "User Denied"})
-                } else if (error instanceof CreateTxFailed) {
-                    setTxResult({status: 2, message: 'Create Tx Failed: ' + error.message})
-                } else if (error instanceof TxFailed) {
-                    setTxResult({status: 2, message: 'Tx Failed: ' + error.message})
-                } else if (error instanceof Timeout) {
-                    setTxResult({status: 2, message: "Timeout"})
-                } else if (error instanceof TxUnspecifiedError) {
-                    setTxResult({status: 2, message: 'Unspecified Error: ' + error.message})
-                } else {
-                    setTxResult({status: 2, message: 'Unknown Error: ' + (error instanceof Error ? error.message : String(error))})
+            const listDonations = [
+                {
+                    address: "terra1nhwuu6a4aakqsakj0d93k0z9n90z92c6ja82ak",
+                    amt: amount*1e6,
                 }
-            });
+            ]
 
-         */
+            setLoadingDonation(true)
+            execDonate(connectedWallet, listDonations, amount*Math.pow(10,6), currency.denom)
+                .then(tx => {
+                    setLoadingDonation(false)
+                    if(tx.logs.length === 1){
+                        toast.success("Transaction succeed, Thank you very much !")
+                        setAmount(0)
+                        updateDatas()
+                    }
+                    else
+                        toast.error("Tx Failed: " + tx.raw_log.split(':')[2])
+                })
+                .catch((error) => {
+                    console.log(error);
+                    setLoadingDonation(false)
+                    toast.error("Error while sending Tx")
+                });
+
+             */
+        }
     }
 
     useEffect(() => {
@@ -289,9 +246,18 @@ function Donation() {
                                         </div>
                                     </div>
                                 ) : (
-                                    <button className={`btn btn-accent ${amount  === 0 && "btn-disabled"} gap-2`} onClick={handleButton}>
-                                        <span>Donate</span>
-                                        <FaHeart/>
+                                    <button className={`btn btn-accent ${amount  === 0 && "btn-disabled"} ${loadingDonation && "loading cursor-not-allowed"} gap-2`} onClick={handleButton}>
+                                        {
+                                            !loadingDonation ? (
+                                                <>
+                                                    <span>Donate</span>
+                                                    <FaHeart/>
+                                                </>
+                                            ) : (
+                                                <span>Waiting</span>
+                                            )
+                                        }
+
                                     </button>
                                 )
                             ) : (

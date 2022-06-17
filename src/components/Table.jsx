@@ -6,6 +6,7 @@ import { ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDouble
 import { PageButton } from '../shared/Button'
 import { SortIcon, SortUpIcon, SortDownIcon } from '../shared/Icons'
 import Spinner from "../shared/Spinner";
+import {nFormatter, truncate} from "../shared/Utils";
 
 export function StatusPill({ value }) {
     return (
@@ -56,6 +57,10 @@ function Table({ columns, data }) {
         setPageSize(20)
     }, [setPageSize])
 
+    const calculValue = (paid, needed) => {
+        return Math.ceil(((paid/needed) > 1 ? 1 : paid/needed)*100)
+    }
+
     if(!loading) {
         return (
             <>
@@ -73,7 +78,7 @@ function Table({ columns, data }) {
                                                         className="group px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
                                                         {...column.getHeaderProps(column.getSortByToggleProps())}
                                                     >
-                                                        <div className="flex items-center justify-between">
+                                                        <div className="flex  items-center justify-center">
                                                             {column.render('Header')}
                                                             {/* Add a sort direction indicator */}
                                                             <span>
@@ -99,20 +104,24 @@ function Table({ columns, data }) {
                                             prepareRow(row)
                                             return (
                                                 <tr {...row.getRowProps()}>
-                                                    {row.cells.map(cell => {
-                                                        return (
-                                                            <td
-                                                                {...cell.getCellProps()}
-                                                                className="px-4 py-2 whitespace-nowrap"
-                                                                role="cell"
-                                                            >
-                                                                {cell.column.Cell.name === "defaultRenderer"
-                                                                    ? <div className="text-sm text-gray-400">{cell.render('Cell')}</div>
-                                                                    : cell.render('Cell')
-                                                                }
-                                                            </td>
-                                                        )
-                                                    })}
+                                                    <>
+                                                        <td className="px-4 py-2 whitespace-nowrap" role="cell">
+                                                            <div className="flex items-center">
+                                                                <div className="text-sm font-medium text-gray-200">
+                                                                    {truncate(row.cells[0].value)}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-4 py-2 whitespace-nowrap" role="cell">
+                                                            <div className="items-center justify-center text-center text-sm text-gray-400">{nFormatter(row.cells[1].value*Math.pow(10, -6), 1)}</div>
+                                                        </td>
+                                                        <td className="px-4 whitespace-nowrap" role="cell">
+                                                            <div className="flex items-center justify-center gap-2">
+                                                                <progress className="progress progress-accent w-16" value={calculValue(row.cells[2].value, row.cells[1].value)} max="100"/>
+                                                                <div className="stat-desc mt-2">{calculValue(row.cells[2].value, row.cells[1].value)}%</div>
+                                                            </div>
+                                                        </td>
+                                                    </>
                                                 </tr>
                                             )
                                         })}

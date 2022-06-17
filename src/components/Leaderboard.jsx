@@ -5,7 +5,7 @@ import medal3 from "../assets/medal-3.png"
 import {useEffect, useState} from "react";
 import Spinner from "../shared/Spinner";
 
-function Leaderboard() {
+function Leaderboard({donors}) {
 
     const [loading, setLoading] = useState(false)
     const [datas, setDatas] = useState(null)
@@ -14,33 +14,12 @@ function Leaderboard() {
 
     useEffect(() => {
         setLoading(false)
-        const leaderboard = [
-            {
-                address: "0x27834649302a193848923020",
-                amount: 12392
-            },
-            {
-                address: "0x27834649302a193848923021",
-                amount: 123
-            },
-            {
-                address: "0x2792837849201230201",
-                amount: 94338
-            },
-            {
-                address: "0x2792837849201230202",
-                amount: 94338
-            },
-            {
-                address: "0x2792837849201230203",
-                amount: 9433883747
-            }
-        ];
-        const datasTmp = leaderboard
-                            .sort((a, b) => b.amount - a.amount)
-                            .slice(0, nbEntries)
-        setDatas(datasTmp)
-    }, [])
+
+        if(donors && donors.length > 0){
+            const datasTmp = donors.sort((a, b) => b.donation_amount - a.donation_amount).slice(0, nbEntries)
+            setDatas(datasTmp)
+        }
+    }, [donors])
 
     if(!loading) {
         return (
@@ -76,7 +55,7 @@ function Leaderboard() {
                                         }
                                         <div className="flex justify-between w-full">
                                             <div>{truncate(item.address)}</div>
-                                            <p className="text-right text-lg">{nFormatter(item.amount, 1)}</p>
+                                            <p className="text-right text-lg">{nFormatter(item.donation_amount, 1)}</p>
                                         </div>
                                     </div>
                                 )

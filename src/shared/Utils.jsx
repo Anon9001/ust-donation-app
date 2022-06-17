@@ -3,7 +3,7 @@ export function classNames(...classes) {
 }
 
 export const truncate = (str) => {
-    return str.length > 15 ? str.substring(0, 6) + "..."  + str.substring(str.length -5, str.length -1)  : str;
+    return str.length > 15 ? str.substring(0, 6) + "..."  + str.substring(str.length -5, str.length)  : str;
 }
 
 export const nFormatter = (num, digits) => {
