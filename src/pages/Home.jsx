@@ -4,7 +4,6 @@ import Leaderboard from "../components/Leaderboard";
 import Holders from "../components/Holders";
 import {useEffect, useState} from "react";
 import {getAllVictims, getDonorsData} from "../contract/query";
-import {algoSmallestWallets} from "../contract/algos";
 
 function Home(){
 
@@ -19,11 +18,9 @@ function Home(){
             .then(datas => {
                 setVictims(datas.victims)
                 setQueryVictimsSucceed(true)
-                console.log("All victims: ", datas.victims);
             })
             .catch((error) => {
                 setQueryVictimsSucceed(false)
-                console.error("All victims error:", error);
             });
     }
 
@@ -32,7 +29,6 @@ function Home(){
             .then(datas => {
                 setDonors(datas.donations)
                 setQueryDonorsSucceed(true)
-                console.log("Donors: ", datas);
             })
             .catch((error) => {
                 setQueryDonorsSucceed(false)

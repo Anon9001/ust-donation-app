@@ -55,7 +55,7 @@ function Leaderboard({donors}) {
                                         }
                                         <div className="flex justify-between w-full">
                                             <div>{truncate(item.address)}</div>
-                                            <p className="text-right text-lg">{nFormatter(item.donation_amount, 1)}</p>
+                                            <p className="text-right text-lg">{nFormatter(item.donation_amount/1e6, 1)}</p>
                                         </div>
                                     </div>
                                 )

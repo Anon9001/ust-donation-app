@@ -7,7 +7,12 @@ import { useWallet, useConnectedWallet, useLCDClient, WalletStatus} from "@terra
 import {currencies, networkAllowed, refundAlgo} from "../contract/config";
 import {execDonate} from "../contract/execute";
 import {toast} from "react-toastify";
-import {algoSmallestWallets} from "../contract/algos";
+import {
+    algoRandomWallets,
+    algoSmallestOffchainWallets,
+    algoSmallestOnchainWallets,
+    algoSmallestWallets
+} from "../contract/algos";
 
 function Donation({updateDatas, victims}) {
     const {
@@ -61,6 +66,18 @@ function Donation({updateDatas, victims}) {
         })
     }
 
+    const updateAmountAvaialable = () => {
+        if(status === "WALLET_CONNECTED"){
+            lcd.bank.balance(connectedWallet.walletAddress).then(([coins]) => {
+                coins.map((item) => {
+                    if(item.denom === currency.denom){
+                        setAmountAvailable(item.amount/1e6)
+                    }
+                });
+            })
+        }
+    }
+
     const handleRadioButton = (e) => {
         setRefundType(e.target.value)
     }
@@ -73,38 +90,43 @@ function Donation({updateDatas, victims}) {
             setTxResult({status: 2, message: "Wallet not connected"})
         }
         else {
-            setTxResult({status: 1, message: ""})
-            /*
-            const {victimsArray: listDonationsAlgo, totalAmount} = algoSmallestWallets(victims, amount*1e6)
-            console.log("listDonationsAlgo: ", listDonationsAlgo)
-            console.log("totalAmount: ", totalAmount)
+            let algosDatas = 0;
 
-            const listDonations = [
-                {
-                    address: "terra1nhwuu6a4aakqsakj0d93k0z9n90z92c6ja82ak",
-                    amt: amount*1e6,
-                }
-            ]
+            if(refundType === "0")
+                algosDatas = algoSmallestWallets(victims, amount*1e6)
+            else if(refundType === "1")
+                algosDatas = algoRandomWallets(victims, amount*1e6)
+            else if(refundType === "2")
+                algosDatas = algoSmallestOnchainWallets(victims, amount*1e6)
+            else if(refundType === "3")
+                algosDatas = algoSmallestOffchainWallets(victims, amount*1e6)
+            else{
+                toast.error("Selected algo not handled")
+                return;
+            }
+
+            if(algosDatas.victimsArray.length === 0){
+                toast.error("Can't send funds, all the victims are whole.")
+                return;
+            }
 
             setLoadingDonation(true)
-            execDonate(connectedWallet, listDonations, amount*Math.pow(10,6), currency.denom)
+            execDonate(connectedWallet, algosDatas.victimsArray, algosDatas.totalAmount, currency.denom)
                 .then(tx => {
                     setLoadingDonation(false)
                     if(tx.logs.length === 1){
                         toast.success("Transaction succeed, Thank you very much !")
                         setAmount(0)
                         updateDatas()
+                        updateAmountAvaialable()
                     }
                     else
                         toast.error("Tx Failed: " + tx.raw_log.split(':')[2])
                 })
                 .catch((error) => {
-                    console.log(error);
                     setLoadingDonation(false)
                     toast.error("Error while sending Tx")
                 });
-
-             */
         }
     }
 
@@ -112,7 +134,7 @@ function Donation({updateDatas, victims}) {
         if(status === "WALLET_CONNECTED"){
             lcd.bank.balance(connectedWallet.walletAddress).then(([coins]) => {
                 coins.map((item) => {
-                    item.denom === currency.denom && setAmountAvailable(item.amount / 1e6)
+                    item.denom === currency.denom && setAmountAvailable(item.amount/1e6)
                     setAmount(0)
                 });
             })
@@ -181,7 +203,7 @@ function Donation({updateDatas, victims}) {
                                                        onChange={handleRadioButton}
                                                        className="radio checked:bg-cyan-500"/>
                                                 <span className="label-text ml-4 mr-2">{item.title}</span>
-                                                <span  className="tooltip" data-tip={item.description}><RiInformationFill/></span>
+                                                <span  className="tooltip tooltip-left" data-tip={item.description}><RiInformationFill/></span>
                                             </label>
                                         </div>
                                     ))

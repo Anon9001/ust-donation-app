@@ -13,12 +13,12 @@ function Stats({ victims, querySucceed }){
         let totalNeeded = 0;
         let totalRefunded = 0;
         victims.forEach((victim) => {
-            totalNeeded += victim.victim.amount_owed;
-            totalRefunded += victim.victim.amount_recived;
+            totalNeeded += (Number(victim.victim.amount_owed) - Number(victim.victim.amount_recived));
+            totalRefunded += Number(victim.victim.amount_recived);
         })
 
-        totalNeeded = totalNeeded*Math.pow(10, -6)
-        totalRefunded = totalRefunded*Math.pow(10, -6)
+        totalNeeded = totalNeeded/1e6
+        totalRefunded = totalRefunded/1e6
         const refundedPourcentage = Math.ceil(((totalRefunded/totalNeeded) > 1 ? 1 : totalRefunded/totalNeeded)*100)
         setFundsNeeded(nFormatter(totalNeeded, 1))
         setHoldersCount(nFormatter(victims.length, 1))
