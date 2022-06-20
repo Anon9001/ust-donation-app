@@ -21,7 +21,7 @@ function Holders({ victims, querySucceed }) {
 
     return (
         <div className="mt-8">
-            <div className="divider mb-8">Rekt list</div>
+            <div className="divider mb-8">UST Victim list</div>
             {
                 querySucceed ? (
                     <Table columns={columns} data={victims}/>

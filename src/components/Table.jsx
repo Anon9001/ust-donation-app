@@ -103,22 +103,22 @@ function Table({ columns, data }) {
                                         {page.map((row, i) => {  // new
                                             prepareRow(row)
                                             return (
-                                                <tr {...row.getRowProps()}>
+                                                <tr className="w-full overflow-x-auto" {...row.getRowProps()}>
                                                     <>
                                                         <td className="px-4 py-2 whitespace-nowrap" role="cell">
                                                             <div className="flex items-center">
-                                                                <div className="text-sm font-medium text-gray-200">
+                                                                <p className="text-sm break-words font-medium text-gray-200">
                                                                     {truncate(row.cells[0].value)}
-                                                                </div>
+                                                                </p>
                                                             </div>
                                                         </td>
                                                         <td className="px-4 py-2 whitespace-nowrap" role="cell">
                                                             <div className="items-center justify-center text-center text-sm text-gray-400">{nFormatter(row.cells[1].value*Math.pow(10, -6), 1)}</div>
                                                         </td>
                                                         <td className="px-4 whitespace-nowrap" role="cell">
-                                                            <div className="flex items-center justify-center gap-2">
-                                                                <progress className="progress progress-accent w-16" value={calculValue(row.cells[2].value, row.cells[1].value)} max="100"/>
-                                                                <div className="stat-desc mt-2">{calculValue(row.cells[2].value, row.cells[1].value)}%</div>
+                                                            <div className="justify-center gap-2">
+                                                                <progress className="progress progress-accent w-full" value={calculValue(row.cells[2].value, row.cells[1].value)} max="100"/>
+                                                                <div className="stat-desc text-center mb-1">{calculValue(row.cells[2].value, row.cells[1].value)}%</div>
                                                             </div>
                                                         </td>
                                                     </>

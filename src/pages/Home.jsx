@@ -48,10 +48,14 @@ function Home(){
 
     return(
         <div className="container">
-            <Donation updateDatas={updateDatas} victims={victims}/>
-            <Stats victims={victims} querySucceed={queryVictimsSucceed}/>
-            <Leaderboard donors={donors}/>
-            <Holders victims={victims} querySucceed={queryVictimsSucceed}/>
+            <div className="flex justify-center mx-3">
+                <div className="w-full">
+                    <Donation updateDatas={updateDatas} victims={victims}/>
+                    <Stats victims={victims} querySucceed={queryVictimsSucceed}/>
+                    <Leaderboard donors={donors}/>
+                    <Holders victims={victims} querySucceed={queryVictimsSucceed}/>
+                </div>
+            </div>
         </div>
     )
 }

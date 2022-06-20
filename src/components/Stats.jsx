@@ -36,20 +36,20 @@ function Stats({ victims, querySucceed }){
         return(
             <div className="mt-8">
                 <div className="divider">Stats</div>
-                <div className="stats flex justify-center shadow border-2 border-gray-500 mt-4">
+                <div className="stats w-full stats-vertical sm:stats-horizontal shadow border-2 border-gray-500 mt-4">
                     <div className="stat place-items-center">
                         <div className="stat-title">Funds needed</div>
                         <div className="stat-value text-white">{fundsNeeded}$</div>
                     </div>
 
                     <div className="stat place-items-center">
-                        <div className="stat-title">Holders Rekt</div>
+                        <div className="stat-title">UST Victims</div>
                         <div className="stat-value text-accent">{holdersCount}</div>
                     </div>
 
                     <div className="stat place-items-center">
                         <div className="stat-title">Refunded</div>
-                        <progress className="progress progress-accent w-32" value={pourcentageRefunded} max="100"/>
+                        <progress className="progress progress-accent my-2" value={pourcentageRefunded} max="100"/>
                         <div className="stat-desc text-white">{pourcentageRefunded}%</div>
                     </div>
                 </div>

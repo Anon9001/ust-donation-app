@@ -6,14 +6,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
-      <div className="flex flex-col h-screen">
+      <>
           <Navbar/>
-          <main className='place-items-center mx-auto'>
-              <Home/>
-          </main>
+          <Home/>
           <Footer/>
           <ToastContainer/>
-      </div>
+      </>
   );
 }
 

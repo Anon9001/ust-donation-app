@@ -147,12 +147,12 @@ function Donation({updateDatas, victims}) {
     return(
         <div className="mt-8">
             <div className="card border-2 border-gray-500 text-primary-content shadow-[0_0_60px_-10px] shadow-cyan-500">
-                <div className="card-body p-6">
+                <div className="card-body py-6 px-2 sm:px-4 md:px-6">
                     <p className="text-xl text-cyan-300 font-bold text-center uppercase mb-4">Donation</p>
                     {
                         status === WalletStatus.WALLET_CONNECTED && (
                             <div className="flex justify-between items-center">
-                                <span className="caption text-sm md:text-xs text-gray-500 mt-4">Address: {truncate(connectedWallet.walletAddress)}</span>
+                                <span className="caption text-xs text-gray-500 mt-4">Address: {truncate(connectedWallet.walletAddress)}</span>
                                 <button className="btn btn-xs" onClick={disconnect}>Disconnect</button>
                             </div>
                         )
@@ -167,7 +167,7 @@ function Donation({updateDatas, victims}) {
                             </div>
                         </div>
                         <div className="flex items-center mt-3">
-                            <div className="flex items-center justify-center mb-3">
+                            <div className="flex flex-shrink-0 items-center justify-center mb-3">
                                 <select className="select select-bordered" value={currency.name}  onChange={handleSelect}>
                                     {
                                         currencies.map((currency) => (
@@ -176,7 +176,6 @@ function Donation({updateDatas, victims}) {
                                     }
                                 </select>
                             </div>
-                            <div className="flex-1"/>
                             <input type="text"
                                    value={amount !== 0 ? amount : ""}
                                    onChange={updateAmount}
@@ -184,12 +183,12 @@ function Donation({updateDatas, victims}) {
                                    placeholder="0.0"
                                    min="0" maxLength="15"
                                    autoComplete="off" autoCorrect="off"
-                                   className="input text-2xl text-right bg-transparent focus:outline-none"
+                                   className="input text-2xl w-full text-right bg-transparent focus:outline-none"
                             />
                         </div>
                     </div>
 
-                    <div className="px-4 mb-4">
+                    <div className="px-1 mb-4 mx-auto">
                         <span className="text-gray-400">Refund Type</span>
                         <div className="mt-2">
                             {
@@ -203,7 +202,7 @@ function Donation({updateDatas, victims}) {
                                                        onChange={handleRadioButton}
                                                        className="radio checked:bg-cyan-500"/>
                                                 <span className="label-text ml-4 mr-2">{item.title}</span>
-                                                <span  className="tooltip tooltip-left" data-tip={item.description}><RiInformationFill/></span>
+                                                <span  className="tooltip tooltip-left md:tooltip-top" data-tip={item.description}><RiInformationFill/></span>
                                             </label>
                                         </div>
                                     ))
