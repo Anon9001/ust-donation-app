@@ -131,6 +131,7 @@ function Donation({updateDatas, victims}) {
     }
 
     useEffect(() => {
+        console.log(availableConnectTypes)
         if(status === "WALLET_CONNECTED"){
             lcd.bank.balance(connectedWallet.walletAddress).then(([coins]) => {
                 coins.map((item) => {
@@ -286,7 +287,7 @@ function Donation({updateDatas, victims}) {
                                     {
                                         /*JSON.stringify({ status, network, wallets }, null, 2)*/
                                         availableConnectTypes.map((connectType) => (
-                                            connectType === "EXTENSION" && (
+                                            (connectType === "EXTENSION" || connectType === "WALLETCONNECT") && (
                                                 <button
                                                     key={connectType}
                                                     onClick={() => connect(connectType)}
