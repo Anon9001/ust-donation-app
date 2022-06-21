@@ -82,6 +82,18 @@ function Donation({updateDatas, victims}) {
         setRefundType(e.target.value)
     }
 
+    const customToastSuccess = (txHash) => (
+        <div>
+            <p>Transaction succeed.</p>
+            <a href={`https://finder.terra.money/testnet/tx/${txHash}`}
+               className="text-xs text-sky-500 underline"
+               target="_blank" rel="noopener noreferrer"
+            >
+                View on explorer
+            </a>
+        </div>
+    );
+
     const handleButton = () => {
         if (!connectedWallet.network.chainID.startsWith(networkAllowed)) {
             setTxResult({status: 2, message: "Wrong network"})
@@ -115,7 +127,7 @@ function Donation({updateDatas, victims}) {
                 .then(tx => {
                     setLoadingDonation(false)
                     if(tx.logs.length === 1){
-                        toast.success("Transaction succeed, Thank you very much !")
+                        toast.success(customToastSuccess(tx.txhash))
                         setAmount(0)
                         updateDatas()
                         updateAmountAvaialable()
@@ -285,19 +297,27 @@ function Donation({updateDatas, victims}) {
                             ) : (
                                 <>
                                     {
-                                        /*JSON.stringify({ status, network, wallets }, null, 2)*/
-                                        availableConnectTypes.map((connectType) => (
-                                            (connectType === "EXTENSION" || connectType === "WALLETCONNECT") && (
+                                        availableConnectTypes.includes("EXTENSION") ? (
+                                            <button
+                                                key={"EXTENSION"}
+                                                onClick={() => connect("EXTENSION")}
+                                                className="btn btn-accent gap-2"
+                                            >
+                                                <img src={Wallet} alt="wallet" className="h-6"/>
+                                                <span>Connect Wallet</span>
+                                            </button>
+                                        ) : (
+                                            availableConnectTypes.includes("WALLETCONNECT") && (
                                                 <button
-                                                    key={connectType}
-                                                    onClick={() => connect(connectType)}
+                                                    key={"WALLETCONNECT"}
+                                                    onClick={() => connect("WALLETCONNECT")}
                                                     className="btn btn-accent gap-2"
                                                 >
                                                     <img src={Wallet} alt="wallet" className="h-6"/>
                                                     <span>Connect Wallet</span>
                                                 </button>
                                             )
-                                        ))
+                                        )
                                     }
                                 </>
                             )
