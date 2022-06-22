@@ -12,14 +12,17 @@ function Stats({ victims, querySucceed }){
 
         let totalNeeded = 0;
         let totalRefunded = 0;
+        let totalAmount = 0;
         victims.forEach((victim) => {
+            totalAmount += Number(victim.victim.amount_owed)
             totalNeeded += (Number(victim.victim.amount_owed) - Math.min(Number(victim.victim.amount_recived), Number(victim.victim.amount_owed)));
             totalRefunded += Number(victim.victim.amount_recived);
         })
 
         totalNeeded = totalNeeded/1e6
         totalRefunded = totalRefunded/1e6
-        const refundedPourcentage = Math.ceil(((totalRefunded/totalNeeded) > 1 ? 1 : totalRefunded/totalNeeded)*100)
+        totalAmount = totalAmount/1e6
+        const refundedPourcentage = Math.ceil(((totalRefunded/totalAmount) > 1 ? 1 : totalRefunded/totalAmount)*100)
         setFundsNeeded(nFormatter(totalNeeded, 1))
         setHoldersCount(nFormatter(victims.length, 1))
         setPourcentageRefunded(refundedPourcentage)
@@ -28,8 +31,9 @@ function Stats({ victims, querySucceed }){
     useEffect(() => {
         setLoading(false)
 
-        if(victims && victims.length > 0)
+        if(victims && victims.length > 0){
             calculStats()
+        }
     }, [victims])
 
     if(!loading) {
