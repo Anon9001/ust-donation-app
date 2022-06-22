@@ -13,7 +13,7 @@ function Stats({ victims, querySucceed }){
         let totalNeeded = 0;
         let totalRefunded = 0;
         victims.forEach((victim) => {
-            totalNeeded += (Number(victim.victim.amount_owed) - Number(victim.victim.amount_recived));
+            totalNeeded += (Number(victim.victim.amount_owed) - Math.min(Number(victim.victim.amount_recived), Number(victim.victim.amount_owed)));
             totalRefunded += Number(victim.victim.amount_recived);
         })
 

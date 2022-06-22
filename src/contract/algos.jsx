@@ -2,7 +2,7 @@ export const algoSmallestWallets = (victims, amountToDonate) => {
     const copy = [...victims];
 
     let filtered = copy.filter(victim => {
-        return victim.victim.amount_owed !== victim.victim.amount_recived;
+        return victim.victim.amount_owed > victim.victim.amount_recived;
     });
 
     filtered = filtered.sort((a, b) => a.victim.amount_owed - b.victim.amount_owed)
@@ -36,7 +36,7 @@ export const algoSmallestOnchainWallets = (victims, amountToDonate) => {
     const copy = [...victims];
 
     let filtered = copy.filter(victim => {
-        return (victim.victim.amount_owed !== victim.victim.amount_recived) &&
+        return (victim.victim.amount_owed > victim.victim.amount_recived) &&
             (victim.victim.on_chain === true);
     });
 
@@ -73,7 +73,7 @@ export const algoSmallestOffchainWallets = (victims, amountToDonate) => {
     const copy = [...victims];
 
     let filtered = copy.filter(victim => {
-        return victim.victim.amount_owed !== victim.victim.amount_recived &&
+        return victim.victim.amount_owed > victim.victim.amount_recived &&
             (victim.victim.on_chain === false);
     });
 
@@ -110,7 +110,7 @@ export const algoRandomWallets = (victims, amountToDonate) => {
     const copy = [...victims];
 
     let filtered = copy.filter(victim => {
-        return victim.victim.amount_owed !== victim.victim.amount_recived;
+        return victim.victim.amount_owed > victim.victim.amount_recived;
     });
 
     let totalAmountToSend = 0;
