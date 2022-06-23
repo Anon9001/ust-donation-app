@@ -105,13 +105,13 @@ function Donation({updateDatas, victims}) {
             let algosDatas = 0;
 
             if(refundType === "0")
-                algosDatas = algoSmallestWallets(victims, amount*1e6)
+                algosDatas = algoSmallestWallets(victims, Number(amount)*1e6)
             else if(refundType === "1")
-                algosDatas = algoRandomWallets(victims, amount*1e6)
+                algosDatas = algoRandomWallets(victims, Number(amount)*1e6)
             else if(refundType === "2")
-                algosDatas = algoSmallestOnchainWallets(victims, amount*1e6)
+                algosDatas = algoSmallestOnchainWallets(victims, Number(amount)*1e6)
             else if(refundType === "3")
-                algosDatas = algoSmallestOffchainWallets(victims, amount*1e6)
+                algosDatas = algoSmallestOffchainWallets(victims, Number(amount)*1e6)
             else{
                 toast.error("Selected algo not handled")
                 return;
