@@ -3,13 +3,15 @@ export const CHAIN_ID = 895;
 export const URL = "https://pisco-lcd.terra.dev";
 export const networkAllowed = "pisco";
 
- export const currencies = [
+export const currencies = [
 
     {
         name: "Luna",
         denom: "uluna",
     }
 ];
+
+export const informations = "Information to be insered about the donation page, how it works and what token is used.";
 
 export const refundAlgo = [
     {

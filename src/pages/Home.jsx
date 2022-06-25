@@ -4,6 +4,7 @@ import Leaderboard from "../components/Leaderboard";
 import Holders from "../components/Holders";
 import {useEffect, useState} from "react";
 import {getAllVictims, getDonorsData} from "../contract/query";
+import Information from "../components/Information";
 
 function Home(){
 
@@ -50,6 +51,7 @@ function Home(){
         <div className="container">
             <div className="flex justify-center mx-3">
                 <div className="w-full">
+                    <Information/>
                     <Donation updateDatas={updateDatas} victims={victims}/>
                     <Stats victims={victims} querySucceed={queryVictimsSucceed}/>
                     <Leaderboard donors={donors}/>

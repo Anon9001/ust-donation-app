@@ -143,7 +143,6 @@ function Donation({updateDatas, victims}) {
     }
 
     useEffect(() => {
-        console.log(availableConnectTypes)
         if(status === "WALLET_CONNECTED"){
             lcd.bank.balance(connectedWallet.walletAddress).then(([coins]) => {
                 coins.map((item) => {
@@ -214,8 +213,10 @@ function Donation({updateDatas, victims}) {
                                                        checked={ refundType === item.value}
                                                        onChange={handleRadioButton}
                                                        className="radio checked:bg-cyan-500"/>
-                                                <span className="label-text ml-4 mr-2">{item.title}</span>
-                                                <span  className="tooltip tooltip-left md:tooltip-top" data-tip={item.description}><RiInformationFill/></span>
+                                                <div className="label-text ml-4 mr-2">
+                                                    <p>{item.title}</p>
+                                                    <p className="text-xs text-gray-500 italic">{item.description}</p>
+                                                </div>
                                             </label>
                                         </div>
                                     ))
