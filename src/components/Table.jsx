@@ -68,7 +68,7 @@ function Table({ columns, data }) {
                     <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
                         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                                <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
+                                <table {...getTableProps()} className="min-w-full divide-y divide-gray-200 table-fixed overflow-x-auto">
                                     <thead className="bg-gray-500">
                                         {headerGroups.map(headerGroup => (
                                             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -107,8 +107,8 @@ function Table({ columns, data }) {
                                                     <>
                                                         <td className="px-4 py-2 whitespace-nowrap" role="cell">
                                                             <div className="flex items-center">
-                                                                <p className="text-sm break-words font-medium text-gray-200">
-                                                                    {truncate(row.cells[0].value)}
+                                                                <p className="text-sm break-all font-medium text-gray-200">
+                                                                    {row.cells[0].value}
                                                                 </p>
                                                             </div>
                                                         </td>

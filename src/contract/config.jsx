@@ -11,7 +11,7 @@ export const currencies = [
     }
 ];
 
-export const informations = "Information to be insered about the donation page, how it works and what token is used.";
+export const informations = "People who used Anchor were conned into believing Anchor was a safe savings account.  When the ponzi scheme collapsed, insiders escaped while retail holders were left holding the bag.  This donation page was made to help victims recover.";
 
 export const refundAlgo = [
     {

@@ -1,15 +1,13 @@
-import {informations} from "../contract/config";
+import {CONTRACT_ADDR, informations} from "../contract/config";
 
 function Information() {
     return (
-        <div className="alert border border-cyan-400 shadow-lg mt-4">
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                     className="stroke-current flex-shrink-0 w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <span>{informations}</span>
+        <div className="card border border-cyan-400 shadow-lg mt-4  p-4">
+            <div className="flex-col text-center">
+                <p className="font-bold text-md">Informations:</p>
+                <p className="text-sm ">{informations}</p>
+                <p className="text-xs font-bold mt-6">Contract address</p>
+                <p className="text-xs break-all">{CONTRACT_ADDR}</p>
             </div>
         </div>
     )
