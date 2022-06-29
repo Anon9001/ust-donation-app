@@ -1,13 +1,12 @@
-export const CONTRACT_ADDR = "terra1exnvs2xzk52fhf322pqtw3fs5yek97aqqtrym7lqu4ddr73xs5qqqhdlxr";
-export const CHAIN_ID = 895;
+export const CONTRACT_ADDR = "terra1zuy5dmpamma8vaymuta94tyq59npk6sfxn8scwh63tjkwl8ahyjs524g3t";
+export const CHAIN_ID = 1489;
 export const URL = "https://pisco-lcd.terra.dev";
 export const networkAllowed = "pisco";
 
 export const currencies = [
-
     {
-        name: "Luna",
-        denom: "uluna",
+        name: "aUSDC",
+        denom: "ibc/F91EA2C0A23697A1048E08C2F787E3A58AC6F706A1CD2257A504925158CFC0F3",
     }
 ];
 

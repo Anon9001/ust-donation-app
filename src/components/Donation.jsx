@@ -26,7 +26,7 @@ function Donation({updateDatas, victims}) {
 
     const [amount, setAmount] = useState(0);
     const [refundType, setRefundType] = useState("0");
-    const [currency, setCurrency] = useState({name:"Luna", denom: "uluna"});
+    const [currency, setCurrency] = useState({name: currencies[0].name, denom: currencies[0].denom});
     const [txResult, setTxResult] = useState({status: 0, message: ""});
     const [amountAvailable, setAmountAvailable] = useState(0);
     const [wrongAmount, setWrongAmount] = useState(false);
@@ -145,6 +145,7 @@ function Donation({updateDatas, victims}) {
     useEffect(() => {
         if(status === "WALLET_CONNECTED"){
             lcd.bank.balance(connectedWallet.walletAddress).then(([coins]) => {
+                console.log(coins)
                 coins.map((item) => {
                     item.denom === currency.denom && setAmountAvailable(item.amount/1e6)
                     setAmount(0)

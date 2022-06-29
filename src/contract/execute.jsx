@@ -13,7 +13,7 @@ const msgDonate = (donations) => {
     };
 }
 
-const _exec = (msg, amountToSend: Number, denom,  fee = new Fee(200000, { uluna: 30000 })) => async (wallet) => {
+const _exec = (msg, amountToSend: Number, denom) => async (wallet) => {
     const lcd = new LCDClient({
         URL: URL,
         chainID: CHAIN_ID,
