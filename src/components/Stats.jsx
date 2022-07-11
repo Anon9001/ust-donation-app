@@ -23,7 +23,7 @@ function Stats({ victims, querySucceed }){
         totalRefunded = totalRefunded/1e6
         totalAmount = totalAmount/1e6
         const refundedPourcentage = Math.ceil(((totalRefunded/totalAmount) > 1 ? 1 : totalRefunded/totalAmount)*100)
-        setFundsNeeded(nFormatter(totalNeeded, 1))
+        setFundsNeeded(nFormatter(totalNeeded, 2))
         setHoldersCount(nFormatter(victims.length, 1))
         setPourcentageRefunded(refundedPourcentage)
     }

@@ -10,7 +10,7 @@ export const currencies = [
     }
 ];
 
-export const informations = "People who used Anchor were conned into believing Anchor was a safe savings account.  When the ponzi scheme collapsed, insiders escaped while retail holders were left holding the bag.  This donation page was made to help victims recover.";
+export const informations = "Millions of people who used Anchor were conned into believing it was a safe savings account. When the Ponzi scheme collapsed, insiders escaped, while retail savers were left with nothing.  This donation portal will help those hardest-hit victims recover.";
 
 export const refundAlgo = [
     {
@@ -21,16 +21,16 @@ export const refundAlgo = [
     {
         title: "Distribute to random wallets",
         value: "1",
-        description: "The algo will pick up a randomly choosen wallet and make it whole. It will repeat the processuntil the given amount is exhausted"
+        description: "The algo will pick up a randomly choosen wallet and make it whole. It will repeat the process until the given amount is exhausted."
     },
     {
         title: "Distribute to the smallest holders on-chain first",
         value: "2",
-        description: "The algo will make whole smallest wallets first. Only people who bought UST on-chain (swap/dex) will be choosen. Off-chain wallets will have better chance to be refunded by exchanges."
+        description: "The algo will make whole smallest wallets first. Only people who bought UST on-chain (swap/DEX) will be chosen. Off-chain wallets will have better chance to be refunded by exchanges."
     },
     {
         title: "Distribute to the smallest holders off-chain first",
         value: "3",
-        description: "The algo will make whole smallest wallets first. Only people who bought UST on exchanges will be choosen."
+        description: "The algo will make whole smallest wallets first. Only people who bought UST on exchanges will be chosen."
     },
 ];
