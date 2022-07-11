@@ -19,7 +19,7 @@ export const refundAlgo = [
         description: "The algo will make whole smallest wallets first."
     },
     {
-        title: "Distribute to all wallets",
+        title: "Distribute to random wallets",
         value: "1",
         description: "The algo will pick up a randomly choosen wallet and make it whole. It will repeat the processuntil the given amount is exhausted"
     },
