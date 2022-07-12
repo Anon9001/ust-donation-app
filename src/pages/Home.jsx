@@ -5,6 +5,7 @@ import Holders from "../components/Holders";
 import {useEffect, useState} from "react";
 import {getAllVictims, getDonorsData} from "../contract/query";
 import Information from "../components/Information";
+import {addOrInsertDonor} from "../shared/Utils";
 
 function Home(){
 
@@ -28,12 +29,16 @@ function Home(){
     const requestDonors = () => {
         getDonorsData()
             .then(datas => {
-                setDonors(datas.donations)
+                let donorsArray = [];
+                datas.donations.forEach((element) => {
+                    addOrInsertDonor(donorsArray, element)
+                })
+
+                setDonors(donorsArray)
                 setQueryDonorsSucceed(true)
             })
             .catch((error) => {
                 setQueryDonorsSucceed(false)
-                console.error("All victims error:", error);
             });
     }
 

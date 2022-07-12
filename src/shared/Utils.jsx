@@ -20,5 +20,11 @@ export const nFormatter = (num, digits) => {
     var item = lookup.slice().reverse().find(function(item) {
         return num >= item.value;
     });
-    return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : num.toFixed(1);
+    return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : num.toFixed(2);
+}
+
+export const addOrInsertDonor = (array, element) => {
+    const i = array.findIndex(_element => _element.address === element.address);
+    if (i > -1) array[i] = {...array[i], donation_amount: (Number(array[i].donation_amount) + Number(element.donation_amount)).toString()};
+    else array.push(element);
 }

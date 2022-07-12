@@ -58,6 +58,7 @@ function Table({ columns, data }) {
     }, [setPageSize])
 
     const calculValue = (paid, needed) => {
+        if(paid === 0 && needed === 0) return 0;
         return Math.ceil(((paid/needed) > 1 ? 1 : paid/needed)*100)
     }
 
@@ -117,8 +118,8 @@ function Table({ columns, data }) {
                                                         </td>
                                                         <td className="px-4 whitespace-nowrap" role="cell">
                                                             <div className="justify-center gap-2">
-                                                                <progress className="progress progress-accent w-full" value={calculValue(row.cells[2].value, row.cells[1].value)} max="100"/>
-                                                                <div className="stat-desc text-center mb-1">{calculValue(row.cells[2].value, row.cells[1].value)}%</div>
+                                                                <progress className="progress progress-accent w-full" value={calculValue(Number(row.cells[2].value), Number(row.cells[1].value))} max="100"/>
+                                                                <div className="stat-desc text-center mb-1">{calculValue(Number(row.cells[2].value), Number(row.cells[1].value))}%</div>
                                                             </div>
                                                         </td>
                                                     </>

@@ -3,8 +3,8 @@ import {nFormatter} from "../shared/Utils";
 import Spinner from "../shared/Spinner";
 
 function Stats({ victims, querySucceed }){
-    const [fundsNeeded, setFundsNeeded] = useState(nFormatter(120000000, 1))
-    const [holdersCount, setHoldersCount] = useState(nFormatter(1600, 1))
+    const [fundsNeeded, setFundsNeeded] = useState(nFormatter(0, 1))
+    const [holdersCount, setHoldersCount] = useState(nFormatter(0, 1))
     const [pourcentageRefunded, setPourcentageRefunded] = useState(0)
     const [loading, setLoading] = useState(false)
 
@@ -24,7 +24,7 @@ function Stats({ victims, querySucceed }){
         totalAmount = totalAmount/1e6
         const refundedPourcentage = Math.ceil(((totalRefunded/totalAmount) > 1 ? 1 : totalRefunded/totalAmount)*100)
         setFundsNeeded(nFormatter(totalNeeded, 2))
-        setHoldersCount(nFormatter(victims.length, 1))
+        setHoldersCount(nFormatter(victims.length, 0))
         setPourcentageRefunded(refundedPourcentage)
     }
 
@@ -43,7 +43,7 @@ function Stats({ victims, querySucceed }){
                 <div className="stats w-full stats-vertical sm:stats-horizontal shadow border-2 border-gray-500 mt-4">
                     <div className="stat place-items-center">
                         <div className="stat-title">Funds needed</div>
-                        <div className="stat-value text-white">{fundsNeeded}$</div>
+                        <div className="stat-value text-white">{Number(fundsNeeded).toFixed(2)}$</div>
                     </div>
 
                     <div className="stat place-items-center">
