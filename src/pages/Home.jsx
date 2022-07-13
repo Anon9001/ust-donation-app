@@ -18,7 +18,10 @@ function Home(){
     const requestAllVictims = () => {
         getAllVictims()
             .then(datas => {
-                setVictims(datas.victims)
+                let filtered = datas.victims.filter(victim => {
+                    return Number(victim.victim.amount_owed) > 0;
+                });
+                setVictims(filtered)
                 setQueryVictimsSucceed(true)
             })
             .catch((error) => {
