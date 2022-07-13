@@ -43,7 +43,7 @@ function Stats({ victims, querySucceed }){
                 <div className="stats w-full stats-vertical sm:stats-horizontal shadow border-2 border-gray-500 mt-4">
                     <div className="stat place-items-center">
                         <div className="stat-title">Funds needed</div>
-                        <div className="stat-value text-white">{Number(fundsNeeded).toFixed(2)}$</div>
+                        <div className="stat-value text-white">${Number(fundsNeeded).toFixed(2)}</div>
                     </div>
 
                     <div className="stat place-items-center">
