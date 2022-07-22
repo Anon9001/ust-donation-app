@@ -1,12 +1,12 @@
-export const CONTRACT_ADDR = "terra1zuy5dmpamma8vaymuta94tyq59npk6sfxn8scwh63tjkwl8ahyjs524g3t";
-export const CHAIN_ID = 1489;
-export const URL = "https://pisco-lcd.terra.dev";
-export const networkAllowed = "pisco";
+export const CONTRACT_ADDR = "terra12r6gl4czhye2rejzuawyryaj30wsvnch3qr0ped4aknwzz9lua5qm46xx8";
+export const CHAIN_ID = 205;
+export const URL = "https://phoenix-lcd.terra.dev/";
+export const networkAllowed = "phoenix-1";
 
 export const currencies = [
     {
         name: "aUSDC",
-        denom: "ibc/F91EA2C0A23697A1048E08C2F787E3A58AC6F706A1CD2257A504925158CFC0F3",
+        denom: "ibc/CBF67A2BCF6CAE343FDF251E510C8E18C361FC02B23430C121116E0811835DEF",
     }
 ];
 
